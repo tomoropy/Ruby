@@ -1,6 +1,6 @@
 group = %w{ A B C D E F }.shuffle
 
-index = rand(2..4)
+separate_at = rand(2..4)
 
-p group.slice( 0, index ).sort
-p group.slice( index, group.length ).sort
+p group.slice( 0, separate_at ).sort
+p group.slice( separate_at, group.length ).sort
