@@ -10,12 +10,9 @@ def create_calender(month)
 	puts "日 月 火 水 木 金 土"
 	print "   " * index_of_day
 
-
 	(1..last_date).each do |date|
 		print date.to_s.rjust(2) + " "
-		
 		index_of_day += 1
-
 		print "\n" if (index_of_day % 7 == 0)
 	end
 
