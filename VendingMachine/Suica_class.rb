@@ -1,4 +1,5 @@
 class Suica
+	attr_accessor :balance
 
 	def initialize(balance)
 		if balance >= 100
@@ -9,6 +10,6 @@ class Suica
 	end
 
 	def show_balance
-		puts @balance
+		puts "現在のSuicaの残高は #{@balance} 円です。"
 	end
 end
