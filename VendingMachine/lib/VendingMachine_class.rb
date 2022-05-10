@@ -1,5 +1,5 @@
 require_relative "./Suica_class.rb"
-module VendingMachine
+class VendingMachine
 
 	@@stocks = [
 		{name: "Cola", price: 120, count: 5}
