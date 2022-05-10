@@ -8,7 +8,7 @@ class Suica
 			@sex = sex
 			@age = age
 		else 
-			puts 'error : チャージ金額は100円以上にしてください'
+			puts 'error : チャージ金額は100円以上にしてください。'
 		end
 	end
 
