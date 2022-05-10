@@ -1,4 +1,4 @@
-require "./Suica_class.rb"
+require_relative "./Suica_class.rb"
 module VendingMachine
 
 	@@stocks = [
@@ -27,7 +27,7 @@ module VendingMachine
 		end
 
 		# 販売履歴を表示
-		def show_sales_history
+		def show_sales_histories
 			puts "販売履歴".center(36, "*")
 			@@sales_histories.each_with_index do |history, i|
 				puts "#{i + 1}: 日時 #{history[:time]}, 性別 #{history[:sex]}, 年齢 #{history[:age]}歳"
@@ -38,7 +38,13 @@ module VendingMachine
 
 		# 自販機に飲料を追加
 		def add_drink(name, price, count)
-			@@stocks << { name: name, price: price, count: count }
+			@@stocks.each do |item|
+				if item[:item] == name
+					break item[:count] += count
+				else
+					break @@stocks << { name: name, price: price, count: count }
+				end
+			end
 			puts name.to_s.ljust(10) + "が商品に追加されました！"
 		end
 
@@ -93,25 +99,28 @@ module VendingMachine
 
 end
 
-# 初期商品在庫を表示
-VendingMachine.show_stocks
+# # 初期商品在庫を表示
+# VendingMachine.show_stocks
 
-# 商品を追加
-VendingMachine.add_drink("Red bull", 200, 5)
-VendingMachine.add_drink("Water", 100, 5)
+# # 商品を追加
+# VendingMachine.add_drink("Red bull", 200, 5)
+# VendingMachine.add_drink("Water", 100, 5)
 
-# 在庫内容を表示
-VendingMachine.show_stocks
+# # 在庫内容を表示
+# VendingMachine.show_stocks
 
-# Suicaを発行
-suica1 = Suica.new(400, "男性", 22)
-suica1.show_balance
-suica1.show_info
+# # Suicaを発行
+# suica1 = Suica.new(400, "男性", 22)
+# suica1.show_balance
+# suica1.show_info
 
-# Red Bullと水を購入
-VendingMachine.purchase_drink(suica1, "Red bull", 1)
-VendingMachine.purchase_drink(suica1, "Water", 1)
+# # Red Bullと水を購入
+# VendingMachine.purchase_drink(suica1, "Red bull", 1)
+# VendingMachine.purchase_drink(suica1, "Water", 1)
 
-# 自販機の売上と販売履歴を表示
-VendingMachine.show_sales_money
-VendingMachine.show_sales_history
+# # 自販機の売上と販売履歴を表示
+# VendingMachine.show_sales_money
+# VendingMachine.show_sales_histories
+
+# # Suicaの残高を表示
+# suica1.show_balance
