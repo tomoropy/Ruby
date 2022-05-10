@@ -15,7 +15,7 @@ RSpec.describe 'VendingMachine' do
 	it 'show stocks' do
 		expect{VendingMachine.show_stocks}.to \
 		output("******************在庫内容******************
-商品名 : Cola       値段 : 120  在庫数 : 5 
+商品名:      Cola 価格:  100 在庫:  3
 ********************************************\n").to_stdout  
 	end
 
@@ -32,9 +32,9 @@ RSpec.describe 'VendingMachine' do
 	it 'show stocks after add drink' do
 		expect{VendingMachine.show_stocks}.to \
 		output("******************在庫内容******************
-商品名 : Cola       値段 : 120  在庫数 : 5 
-商品名 : Red bull   値段 : 200  在庫数 : 5 
-商品名 : Water      値段 : 100  在庫数 : 5 
+商品名:      Cola 価格:  100 在庫:  3
+商品名:  Red bull 価格:  200 在庫:  5
+商品名:     Water 価格:  100 在庫:  5
 ********************************************\n").to_stdout  
 	end
 	
@@ -65,6 +65,6 @@ RSpec.describe 'VendingMachine' do
 		expect{
 			VendingMachine.purchase_drink(@suica1, "Cola", 1)
 			@suica1.show_balance
-		}.to output("Cola       を1本購入しました。\nこのSuicaの残高は 280 円です。\n").to_stdout			
+		}.to output("Cola       を1本購入しました。\nこのSuicaの残高は 300 円です。\n").to_stdout			
 	end
 end

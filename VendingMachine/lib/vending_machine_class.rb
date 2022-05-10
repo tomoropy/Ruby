@@ -1,9 +1,8 @@
 require_relative "./suica_class.rb"
 class VendingMachine
 
-	@@stocks = [
-		{name: "Cola", price: 120, count: 5}
-	]
+	@@stocks = { Cola: { price: 100, count: 3 } }
+
 	@@sales = 0
 
 	@@sales_histories = []
@@ -13,10 +12,20 @@ class VendingMachine
 		# 自販機の在庫内容を表示
 		def show_stocks
 			puts "在庫内容".center(40, "*")
-			@@stocks.each do |item|
-				puts  "商品名 : " + item[:name].to_s.ljust(10) +
-				" 値段 : "  + item[:price].to_s.ljust(4) +
-				" 在庫数 : " + item[:count].to_s.ljust(2)
+			parent_array = []
+			@@stocks.each do |key, value|
+				array = []
+				array << key.to_s
+				value.each do |v|
+					array << v[1].to_s
+				end
+				parent_array << array
+			end
+			
+			parent_array.each do |item|
+				puts "商品名:" + item[0].to_s.rjust(10) + 
+				" 価格: " + item[1].to_s.rjust(4) + 
+				" 在庫: " + item[2].to_s.rjust(2)
 			end
 			puts "*" * 44
 		end
@@ -38,32 +47,18 @@ class VendingMachine
 
 		# 自販機に飲料を追加
 		def add_drink(name, price, count)
-			@@stocks.each do |item|
-				if item[:item] == name
-					break item[:count] += count
-				else
-					break @@stocks << { name: name, price: price, count: count }
-				end
-			end
+			@@stocks[name.to_sym] = { price: price, count: count }
 			puts name.to_s.ljust(10) + "が商品に追加されました！"
 		end
 
 		# 商品が購入可能か？（在庫量的に）
 		def there_stock?(name, count)
-			@@stocks.each do |item|
-				if item[:name] == name
-					break item[:count] >= count
-				end
-			end
+			@@stocks[name.to_sym][:count] >= count
 		end
 
 		# 購入合計金額を計算
 		def calc_to_total(name, count)
-			@@stocks.each do |item|
-				if item[:name] == name
-					break item[:price] * count
-				end
-			end
+			@@stocks[name.to_sym][:price] * count
 		end
 		
 		# 購入成立した場合の処理
@@ -73,6 +68,7 @@ class VendingMachine
 			if there_stock?(name, count) && suica.balance >= total
 				money_proces(suica, total)
 				register_info(suica)
+				@@stocks[name.to_sym][:count] -= 1
 				puts name.to_s.ljust(10) + " を#{count}本購入しました。"
 
 			# 在庫数が足りない場合
@@ -101,6 +97,7 @@ class VendingMachine
 	end
 
 end
+
 
 # # 初期商品在庫を表示
 # VendingMachine.show_stocks
