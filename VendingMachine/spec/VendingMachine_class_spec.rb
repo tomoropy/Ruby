@@ -1,5 +1,5 @@
-require_relative "../lib/Suica_class.rb"
-require_relative "../lib/VendingMachine_class.rb"
+require_relative "../lib/suica_class.rb"
+require_relative "../lib/vending_machine_class.rb"
 
 RSpec.describe 'VendingMachine' do
 

@@ -1,4 +1,4 @@
-require_relative "./Suica_class.rb"
+require_relative "./suica_class.rb"
 class VendingMachine
 
 	@@stocks = [
@@ -15,8 +15,8 @@ class VendingMachine
 			puts "在庫内容".center(40, "*")
 			@@stocks.each do |item|
 				puts  "商品名 : " + item[:name].to_s.ljust(10) +
-							" 値段 : "  + item[:price].to_s.ljust(4) +
-							" 在庫数 : " + item[:count].to_s.ljust(2)
+				" 値段 : "  + item[:price].to_s.ljust(4) +
+				" 在庫数 : " + item[:count].to_s.ljust(2)
 			end
 			puts "*" * 44
 		end
@@ -65,17 +65,6 @@ class VendingMachine
 				end
 			end
 		end
-
-		# お金の処理
-		def money_proces(suica, total)
-			@@sales += total
-			suica.balance -= total
-		end
-		
-		# 販売履歴を登録する
-		def register_info(suica)
-			@@sales_histories << { time: Time.now.to_s.slice(0, 9), sex: suica.sex, age: suica.age }
-		end
 		
 		# 購入成立した場合の処理
 		def purchase_drink(suica, name, count)
@@ -95,6 +84,20 @@ class VendingMachine
 				puts 'error : Suicaの残高が足りません。'
 			end
 		end
+
+		private
+
+			# お金の処理
+			def money_proces(suica, total)
+				@@sales += total
+				suica.balance -= total
+			end
+			
+			# 販売履歴を登録する
+			def register_info(suica)
+				@@sales_histories << { time: Time.now.to_s.slice(0, 9), sex: suica.sex, age: suica.age }
+			end
+
 	end
 
 end

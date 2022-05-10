@@ -1,4 +1,4 @@
-require_relative "../lib/Suica_class.rb"
+require_relative "../lib/suica_class.rb"
 
 RSpec.describe 'Suica' do
 
