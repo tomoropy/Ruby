@@ -1,11 +1,11 @@
 require_relative "./suica_class.rb"
 class VendingMachine
 
-  @@stocks = { Cola: { price: 100, count: 3 } }
+  @stocks = { Cola: { price: 100, count: 3 } }
 
-  @@sales = 0
+  @sales = 0
 
-  @@sales_histories = []
+  @sales_histories = []
 
   class << self
 
@@ -13,7 +13,7 @@ class VendingMachine
     def show_stocks
       puts "在庫内容".center(40, "*")
       parent_array = []
-      @@stocks.each do |key, value|
+      @stocks.each do |key, value|
         array = []
         array << key.to_s
         value.each do |v|
@@ -32,13 +32,13 @@ class VendingMachine
 
     # 売上を表示
     def show_sales_money
-      puts "現在の自販機の売上は #{@@sales} 円です。"
+      puts "現在の自販機の売上は #{@sales} 円です。"
     end
 
     # 販売履歴を表示
     def show_sales_histories
       puts "販売履歴".center(36, "*")
-      @@sales_histories.each_with_index do |history, i|
+      @sales_histories.each_with_index do |history, i|
         puts "#{i + 1}: 日時 #{history[:time]}, 性別 #{history[:sex]}, 年齢 #{history[:age]}歳"
       end
       puts "*" * 40
@@ -47,18 +47,18 @@ class VendingMachine
 
     # 自販機に飲料を追加
     def add_drink(name, price, count)
-      @@stocks[name.to_sym] = { price: price, count: count }
+      @stocks[name.to_sym] = { price: price, count: count }
       puts name.to_s.ljust(10) + "が商品に追加されました！"
     end
 
     # 商品が購入可能か？（在庫量的に）
     def there_stock?(name, count)
-      @@stocks[name.to_sym][:count] >= count
+      @stocks[name.to_sym][:count] >= count
     end
 
     # 購入合計金額を計算
     def calc_to_total(name, count)
-      @@stocks[name.to_sym][:price] * count
+      @stocks[name.to_sym][:price] * count
     end
     
     # 購入成立した場合の処理
@@ -68,7 +68,7 @@ class VendingMachine
       if there_stock?(name, count) && suica.balance >= total
         money_proces(suica, total)
         register_info(suica)
-        @@stocks[name.to_sym][:count] -= 1
+        @stocks[name.to_sym][:count] -= 1
         puts name.to_s.ljust(10) + " を#{count}本購入しました。"
 
       # 在庫数が足りない場合
@@ -85,13 +85,13 @@ class VendingMachine
 
       # お金の処理
       def money_proces(suica, total)
-        @@sales += total
+        @sales += total
         suica.balance -= total
       end
       
       # 販売履歴を登録する
       def register_info(suica)
-        @@sales_histories << { time: Time.now.to_s.slice(0, 9), sex: suica.sex, age: suica.age }
+        @sales_histories << { time: Time.now.to_s.slice(0, 9), sex: suica.sex, age: suica.age }
       end
 
   end
