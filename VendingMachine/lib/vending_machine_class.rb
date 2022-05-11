@@ -51,16 +51,6 @@ class VendingMachine
       puts name.to_s.ljust(10) + "が商品に追加されました！"
     end
 
-    # 商品が購入可能か？（在庫量的に）
-    def there_stock?(name, count)
-      @stocks[name.to_sym][:count] >= count
-    end
-
-    # 購入合計金額を計算
-    def calc_to_total(name, count)
-      @stocks[name.to_sym][:price] * count
-    end
-    
     # 購入成立した場合の処理
     def purchase_drink(suica, name, count)
       total = calc_to_total(name, count)
@@ -93,6 +83,17 @@ class VendingMachine
       def register_info(suica)
         @sales_histories << { time: Time.now.to_s.slice(0, 9), sex: suica.sex, age: suica.age }
       end
+      
+      # 商品が購入可能か？（在庫量的に）
+      def there_stock?(name, count)
+        @stocks[name.to_sym][:count] >= count
+      end
+
+      # 購入合計金額を計算
+      def calc_to_total(name, count)
+        @stocks[name.to_sym][:price] * count
+      end
+      
 
   end
 
